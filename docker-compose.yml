@@ -1,0 +1,47 @@
+version: '1'
+
+# create volumes before:
+#   docker volume create nightscout-storage grafana-storage
+volumes:
+  nightscout-storage:
+    external: true
+  grafana-storage:
+    external: true
+
+services:
+
+  database:
+    image: mongo
+    restart: unless-stopped
+    environment:
+      - 'MONGO_INITDB_ROOT_USERNAME=<MONGODB_USER>'
+      - 'MONGO_INITDB_ROOT_PASSWORD=<MONGODB_PASSWORD>'
+    volumes:
+      - nightscout-storage:/data/db
+#    ports:
+#      - "27017:27017"
+
+  nightscout:
+    image: <YOUR_IMAGE_ID>
+    restart: unless-stopped
+    environment:
+      - "MONGODB_URI=mongodb://<MONGODB_USER>:<MONGODB_PASSWORD>@ns-database-1/<MONGODB_DATABASE>"
+      - "API_SECRET=<NIGHTSCOUT_API_SECRET>"
+      - "INSECURE_USE_HTTP=true"
+      - "SECURE_HSTS_HEADER=false"
+      - "DEVICESTATUS_ADVANCED=true"
+      - "ENABLE=food delta direction timeago profile careportal boluscalc iob cob basal bolus pump openaps xdripjs"
+    ports:
+      - "1337:1337"
+
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    restart: unless-stopped
+    environment:
+      - "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=meln5674-mongodb-community"
+      - "GF_INSTALL_PLUGINS=https://github.com/meln5674/grafana-mongodb-community-plugin/releases/download/v0.2.0%2Brc3/meln5674-mongodb-community.zip;meln5674-mongodb-community"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - "3000:3000"
