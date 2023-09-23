@@ -1,7 +1,6 @@
 version: '1'
 
-# create volumes before:
-#   docker volume create nightscout-storage grafana-storage
+
 volumes:
   nightscout-storage:
     external: true
@@ -22,7 +21,7 @@ services:
 #      - "27017:27017"
 
   nightscout:
-    image: <YOUR_IMAGE_ID>
+    image: my-nightscout-image
     restart: unless-stopped
     environment:
       - "MONGODB_URI=mongodb://<MONGODB_USER>:<MONGODB_PASSWORD>@ns-database-1/<MONGODB_DATABASE>"
