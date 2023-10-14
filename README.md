@@ -33,3 +33,13 @@ Password: your_password
 Go to dashboards -> new -> import -> upload dashboard file -> choose the data source we set before -> load
 
 And you're done! If you have already some data synced with nightscout you should already be able to see it, else, configure your new nightscout and sync all data!
+
+
+# Access it from the internet
+If you have a vps it's best, but works also on your local computer. If you don't have a domain, you can use some tunnelling services such as telebit.cloud.
+Example:
+
+telebit http 1337
+telebit http 3000 grafana
+
+Will serve your nightscout and grafana instance over a random domain assigned to you
