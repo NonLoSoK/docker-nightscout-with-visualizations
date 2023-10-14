@@ -1,5 +1,9 @@
 # docker-nightscout-with-visualizations
 
+# **IMPORTANT**
+This is not (yet) a production version. Just a work in progress. It is already usable, but might have some flaws (even security flaws!!!) so use it at your own risk
+
+
 # What
 
 A nice visualization for your nightscout data
