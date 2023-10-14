@@ -40,6 +40,7 @@ If you have a vps it's best, but works also on your local computer. If you don't
 Example:
 
 telebit http 1337
+
 telebit http 3000 grafana
 
 Will serve your nightscout and grafana instance over a random domain assigned to you
